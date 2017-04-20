@@ -34,7 +34,7 @@ public class Main {
         
         f.setDate(md.getdate());
         f.setFname("spring");
-        f.setMobile("0002");
+        f.setMobile("00022");
         f.setName("spring");
         
         md.addFriend(f);

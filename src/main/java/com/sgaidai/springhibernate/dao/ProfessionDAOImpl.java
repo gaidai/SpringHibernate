@@ -15,21 +15,16 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 
 public class ProfessionDAOImpl implements ProfessionDAO {
     
-    private SessionFactory sessionFactory;  
-    
-    public void setSessionFactory(SessionFactory sessionFactory) {  
-        this.sessionFactory = sessionFactory;  
+    private HibernateTemplate template;
+
+    public void setTemplate(HibernateTemplate template) {
+        this.template = template;
     }  
     
     
     @Override
     public Serializable addProfession(Profession p) {
-        Session session = this.sessionFactory.openSession();  
-         Transaction tx = session.beginTransaction();  
-         session.persist(p);  
-         tx.commit();  
-         session.close();
-        return null;
+        return (Long)template.save(p);
     }
 
     @Override

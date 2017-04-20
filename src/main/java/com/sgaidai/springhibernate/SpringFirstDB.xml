@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <beans xmlns="http://www.springframework.org/schema/beans"  
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"  
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:aop="http://www.springframework.org/schema/aop"  
      xmlns:tx="http://www.springframework.org/schema/tx"  
      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
@@ -15,11 +16,22 @@
     </bean>
     
     <bean name="mobillerDAO" class="com.sgaidai.springhibernate.dao.MobillerDAO">
-        <property name="sessionFactory" ref="sessionFactory" />  </bean>
+        <property name="template" ref="hibernateTemplate" />
+    </bean>
         
-   
+    <bean name="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>   
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    
     <bean name="sessionFactory"
-        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
+        class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"> 
         <property name="dataSource" ref="studentDS" />
         <property name="annotatedClasses">
             <list>
